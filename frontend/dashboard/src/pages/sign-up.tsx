@@ -1,4 +1,5 @@
 import { Formik } from 'formik'
+import Link from 'next/link'
 import ButtonGuest from '../components/button-guest'
 import InputGuest from '../components/input-guest'
 import Layout from '../components/layout'
@@ -14,7 +15,7 @@ export default function SignUp() {
 
   return (
     <Layout header={false}>
-      <div className="min-h-screen flex flex-col-reverse md:flex-row-reverse md:p-0 p-10 gap-10 justify-evenly items-center">
+      <div className="min-h-screen flex flex-col md:flex-row md:p-0 p-10 gap-10 justify-evenly items-center">
         <div className="gap-4">
           <svg className="md:w-full w-24 text-slate-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10 2.5L1.5 17.5h17L10 2.5zm0 1.5l6.5 11h-13L10 4z" clipRule="evenodd" />
@@ -98,6 +99,11 @@ export default function SignUp() {
               </form>
             )}
           </Formik>
+          <div className="flex flex-row justify-end mt-12">
+            <Link href="/sign-in" className="flex text-white font-bold hover:text-slate-200 gap-1">
+              Já tem uma conta? <span className="text-blue-400">Entrar</span>
+            </Link>
+          </div>
         </div>
       </div>
     </Layout>

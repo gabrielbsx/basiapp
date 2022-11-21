@@ -23,7 +23,7 @@ export default function InputGuest({
 }: InputGuestProps) {
   return (
     <>
-      <div className="flex flex-col my-5">
+      <div className="my-5">
         <label
           className="flex font-medium sm:text-sm text-gray-100"
           htmlFor={name}
@@ -38,6 +38,7 @@ export default function InputGuest({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
+          placeholder={placeholder}
         />
       </div>
       {error && touched && (
