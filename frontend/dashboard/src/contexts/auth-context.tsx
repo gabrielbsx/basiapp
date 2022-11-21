@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { parseCookies, setCookie } from 'nookies'
-import { createContext, SetStateAction, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
+import isGuestRoute from '../helpers/is-guest-route.helper'
 import IProps from '../interfaces/props.interface'
 import { signInRequest } from '../services/auth'
 import recoverUserInformation from '../services/recover-user-information'
@@ -9,19 +10,21 @@ import { UserType } from '../types/user.type'
 
 export const AuthContext = createContext({} as AuthContextType)
 export function AuthProvider({ children }: IProps) {
-  const [user, setUser] = useState<UserType | null>(null)
   const router = useRouter()
+  const { pathname } = router
+  const [user, setUser] = useState<UserType | null>(null)
   const isAuthenticated = false
   useEffect(() => {
     const { 'nextauth.token': token } = parseCookies()
-    if (!token) {
+    if (!isGuestRoute(pathname) && !token) {
       router.push('/sign-in')
+      return
     }
     recoverUserInformation()
       .then((response: any) => {
         setUser(response.user)
       })
-  }, [router])
+  }, [])
   async function signIn({ email, password }: SignInRequestDataType): Promise<void> {
     const { token, user } = await signInRequest({ email, password })
     console.log(token, user)
