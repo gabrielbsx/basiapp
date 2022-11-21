@@ -1,10 +1,10 @@
 // function decorator without class
 export default function errorDecorator(wrappedFunction: Function) {
-  return function (...args: any[]) {
+  return async function (...args: any[]) {
     try {
-      return wrappedFunction(...args)
-    } catch (error) {
-      console.log(error)
+      return await wrappedFunction(...args)
+    } catch (error: Error | any) {
+      console.log(error.message)
     }
   }
 }
