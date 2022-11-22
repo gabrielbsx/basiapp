@@ -31,7 +31,7 @@ export default function InputGuest({
           {label}
         </label>
         <input
-          className="flex w-full px-3 py-2 mt-1 bg-slate-200 border border-slate-700 rounded-md shadow-sm focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+          className="flex w-full px-3 py-2 mt-1 bg-neutral-800 text-white border border-slate-700 rounded-md shadow-sm focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
           type={type}
           name={name}
           id={name}
