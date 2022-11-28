@@ -1,2 +1,3 @@
-nest-api/
-api/
+node_modules/
+.env
+.data/
