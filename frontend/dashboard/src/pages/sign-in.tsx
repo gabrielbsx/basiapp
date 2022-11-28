@@ -31,7 +31,7 @@ export default function SignIn() {
         </LogoFormAnimation>
         <FormGuestAnimation>
 
-          <div className="bg-neutral-900 shadow-xl gap-4 border border-slate-800 md:w-[600px] w-full md:mx-0 mx-4 rounded-xl p-10">
+          <div className="bg-neutral-900 shadow-xl gap-4 border border-slate-800 w-full md:mx-0 mx-4 rounded-xl p-10">
             <div className="flex flex-col mb-12">
               <h1 className="text-xl font-bold text-slate-100">Login</h1>
               <span className="text-md text-slate-200">
