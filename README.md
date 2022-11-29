@@ -26,3 +26,6 @@
 - packages crud
 - ticket crud
 - chat with sockets
+
+## database diagram
+![plot](./db-diagram.png)
