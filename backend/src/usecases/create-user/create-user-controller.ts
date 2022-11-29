@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User, { IUser } from '../../models/user';
+import User from '../../models/user';
 import { CreateUserValidator } from './create-user-validator';
 import * as bcrypt from 'bcrypt';
 
@@ -19,10 +19,7 @@ export default class CreateUserController {
         ...userWithoutPassword,
       });
       return response.status(201).json({
-        user: {
-          ...user.toJSON(),
-          password: undefined,
-        }
+        user: user.toJSON(),
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

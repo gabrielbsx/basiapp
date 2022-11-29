@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import env from '../../config/env';
-import User from '../../models/user';
 
 export default class UserAdminMiddleware {
   async handle(request: Request, response: Response, next: NextFunction) {

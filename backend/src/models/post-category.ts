@@ -1,15 +1,17 @@
+import { Schema } from 'mongoose';
 import database from '../config/database';
-import { IPost } from './post';
+import { Post } from './post';
 
-export interface IPostCategory {
+export interface PostCategory {
+  id: Schema.Types.ObjectId;
   name: string;
   description: string;
-  posts: IPost[];
+  posts: Post[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const postCategorySchema = new database.Schema<IPostCategory>({
+const postCategorySchema = new database.Schema<PostCategory>({
   name: { type: String, required: true },
   description: { type: String, required: false },
   posts: [{ type: database.Schema.Types.ObjectId, ref: 'Post' }],

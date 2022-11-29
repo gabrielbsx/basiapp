@@ -1,23 +1,25 @@
+import { Schema } from 'mongoose';
 import database from '../config/database';
-import { IAccount } from './account';
-import { IPostCategory } from './post-category';
-import { IPostLike } from './post-likes';
-import { IServer } from './server';
+import { Account } from './account';
+import { PostCategory } from './post-category';
+import { PostLike } from './post-likes';
+import { Server } from './server';
 
-export interface IPost {
+export interface Post {
+  id: Schema.Types.ObjectId;
   title: string;
   content: string;
   thumbnail: string;
-  category: IPostCategory;
-  server: IServer;
-  account: IAccount;
-  likes: IPostLike[];
-  comments: IPost[];
+  category: PostCategory;
+  server: Server;
+  account: Account;
+  likes: PostLike[];
+  comments: Post[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const postSchema = new database.Schema<IPost>({
+const postSchema = new database.Schema<Post>({
   title: { type: String, required: true },
   content: { type: String, required: true },
   thumbnail: { type: String, required: false },

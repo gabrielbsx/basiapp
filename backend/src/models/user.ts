@@ -1,18 +1,19 @@
 import { Schema } from 'mongoose';
 import database from '../config/database';
-import { IServer } from './server';
+import { Server } from './server';
 
-export type IUser = {
+export type User = {
+  id: Schema.Types.ObjectId;
   name?: string;
   email: string;
   password: string;
   role: string;
-  servers?: IServer[];
+  servers?: Server[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const userSchema = new database.Schema<IUser>({
+const userSchema = new database.Schema<User>({
   name: { type: String, required: false },
   email: { type: String, unique: true, lowercase: true },
   password: { type: String, required: true, select: false },

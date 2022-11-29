@@ -19,10 +19,7 @@ export default class AuthAccountController {
         ...accountWithoutPassword,
       });
       return response.status(201).json({
-        user: {
-          id: user._id,
-          ...accountWithoutPassword,
-        },
+        user: user.toJSON(),
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

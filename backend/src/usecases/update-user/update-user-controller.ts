@@ -23,10 +23,7 @@ export default class UpdateUserController {
       }, { new: true });
       return response.json({
         message: 'Usuário atualizado com sucesso',
-        user: {
-          ...user.toJSON(),
-          password: undefined,
-        },
+        user: user.toJSON(),
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

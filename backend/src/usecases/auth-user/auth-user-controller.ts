@@ -4,7 +4,6 @@ import User from '../../models/user';
 import env from '../../config/env';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { dataMongo } from '../../helpers';
 
 export default class AuthUserController {
   async handle(request: Request, response: Response) {
@@ -30,10 +29,7 @@ export default class AuthUserController {
       });
       return response.json({
         token,
-        user: {
-          ...dataMongo(user.toJSON()),
-          password: undefined,
-        }
+        user: user.toJSON(),
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

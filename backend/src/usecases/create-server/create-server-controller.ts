@@ -19,9 +19,7 @@ export default class CreateServerController {
       user.servers.push(server);
       await user.save();
       return response.json({
-        server: {
-          ...server.toJSON(),
-        },
+        server: server.toJSON(),
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
