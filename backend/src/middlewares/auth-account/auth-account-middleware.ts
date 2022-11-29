@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import env from '../../config/env';
-import Account from '../../models/account';
+import Account, { IAccount } from '../../models/account';
 
 export default class AuthAccountMiddleware {
   async handle(request: Request, response: Response, next: NextFunction) {
@@ -45,7 +45,7 @@ export default class AuthAccountMiddleware {
       }
       request.account = {
         id: account._id,
-        ...account.toJSON(),
+        ...account.toJSON() as IAccount,
         _id: undefined,
         __v: undefined,
       };
