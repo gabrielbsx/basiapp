@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import User from '../../models/user';
+import User, { IUser } from '../../models/user';
 import { CreateUserValidator } from './create-user-validator';
 import * as bcrypt from 'bcrypt';
-import { dataMongo } from '../../helpers';
 
 export default class CreateUserController {
   async handle (request: Request, response: Response) {
@@ -21,7 +20,7 @@ export default class CreateUserController {
       });
       return response.status(201).json({
         user: {
-          ...dataMongo(user),
+          ...user.toJSON(),
           password: undefined,
         }
       });

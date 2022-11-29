@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import CreateServerValidator from './create-server-validator';
 import Server from '../../models/server';
-import { dataMongo } from '../../helpers';
 import User from '../../models/user';
 
 export default class CreateServerController {
@@ -17,8 +16,12 @@ export default class CreateServerController {
         ...body,
         owner: user,
       });
+      user.servers.push(server);
+      await user.save();
       return response.json({
-        server: dataMongo(server),
+        server: {
+          ...server.toJSON(),
+        },
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

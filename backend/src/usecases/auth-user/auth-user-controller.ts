@@ -31,7 +31,7 @@ export default class AuthUserController {
       return response.json({
         token,
         user: {
-          ...dataMongo(user),
+          ...dataMongo(user.toJSON()),
           password: undefined,
         }
       });
