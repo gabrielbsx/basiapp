@@ -8,7 +8,7 @@ export type User = {
   email: string;
   password: string;
   role: string;
-  servers?: Server[];
+  servers: Server[];
   createdAt: Date;
   updatedAt: Date;
 }
