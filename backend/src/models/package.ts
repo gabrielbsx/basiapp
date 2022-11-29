@@ -1,6 +1,23 @@
 import database from '../config/database';
 
-const packageSchema = new database.Schema({
+export interface IPackage {
+  name: string;
+  description: string;
+  donate: number;
+  price: number;
+  items: {
+    item: number;
+    effects: {
+      effect: number;
+      value: number;
+    }[];
+  }[];
+  thumbnail: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const packageSchema = new database.Schema<IPackage>({
   name: { type: String, required: true },
   description: { type: String, required: true },
   donate: { type: Number, required: true },
