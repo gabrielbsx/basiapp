@@ -4,12 +4,13 @@ import User from '../../models/user';
 import env from '../../config/env';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { dataMongo } from '../../helpers';
 
 export default class AuthUserController {
   async handle(request: Request, response: Response) {
     try {
       const { body } = request;
-      const errors = await AuthUserValidator.validate(body);
+      const errors = await AuthUserValidator.validate(body, request);
       if (errors) {
         return response.status(400).json({ errors });
       }
@@ -29,12 +30,10 @@ export default class AuthUserController {
       });
       return response.json({
         token,
-        user: Object.assign({}, user.toJSON(), {
-          id: user._id,
+        user: {
+          ...dataMongo(user),
           password: undefined,
-          _id: undefined,
-          __v: undefined,
-        }),
+        }
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

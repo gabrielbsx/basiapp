@@ -2,12 +2,13 @@ import { Request, Response } from 'express';
 import { UpdateUserValidator } from './update-user-validator';
 import User from '../../models/user';
 import * as bcrypt from 'bcrypt';
+import { dataMongo } from '../../helpers';
 
 export default class UpdateUserController {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;
-      const errors = await UpdateUserValidator.validate(body);
+      const errors = await UpdateUserValidator.validate(body, request);
       if (errors) {
         return response.status(400).json({ errors });
       }
@@ -24,10 +25,7 @@ export default class UpdateUserController {
       return response.json({
         message: 'Usuário atualizado com sucesso',
         user: {
-          id: user!._id,
-          ...user!.toJSON(),
-          _id: undefined,
-          __v: undefined,
+          ...dataMongo(user),
           password: undefined,
         },
       });

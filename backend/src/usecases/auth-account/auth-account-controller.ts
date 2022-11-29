@@ -7,7 +7,7 @@ export default class AuthAccountController {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;
-      const errors = await AuthAccountValidator.validate(body);
+      const errors = await AuthAccountValidator.validate(body, request);
       if (errors) {
         return response.status(400).json({ errors });
       }
