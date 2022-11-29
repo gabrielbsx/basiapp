@@ -12,11 +12,14 @@ export abstract class Validator {
         context: { request },
       });
       return null;
-    } catch (error: any) {
-      return error.details.map((detail: any) => ({
-        message: detail.message,
-        field: detail.context.key,
-      }));
+    } catch (error) {
+      if (error instanceof Joi.ValidationError) {
+        return error.details.map((detail) => ({
+          message: detail.message,
+          field: detail.context.key,
+        }));
+      }
+      return [{ message: error.message, field: 'any' }];
     }
   }
 }
