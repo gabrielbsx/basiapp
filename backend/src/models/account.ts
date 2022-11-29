@@ -1,4 +1,7 @@
 import database from '../config/database';
+import { IPost } from './post';
+import { IPostLike } from './post-likes';
+import { IServer } from './server';
 
 export interface IAccount {
   name?: string;
@@ -6,10 +9,10 @@ export interface IAccount {
   username: string;
   password: string;
   role: string;
-  server?: database.Schema.Types.ObjectId;
-  posts?: database.Schema.Types.ObjectId[];
-  likes?: database.Schema.Types.ObjectId[];
-  comments?: database.Schema.Types.ObjectId[];
+  server?: IServer;
+  posts?: IPost[];
+  likes?: IPostLike[];
+  comments?: IPost[];
   createdAt: Date;
   updatedAt: Date;
 }

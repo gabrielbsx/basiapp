@@ -1,8 +1,10 @@
 import database from '../config/database';
+import { IAccount } from './account';
+import { IPackage } from './package';
 
 export interface IDonate {
-  account: database.Schema.Types.ObjectId;
-  package: database.Schema.Types.ObjectId;
+  account: IAccount;
+  package: IPackage;
   statusPayment: string;
   createdAt: Date;
   updatedAt: Date;

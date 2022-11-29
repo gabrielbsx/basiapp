@@ -1,14 +1,18 @@
 import database from '../config/database';
+import { IAccount } from './account';
+import { IPostCategory } from './post-category';
+import { IPostLike } from './post-likes';
+import { IServer } from './server';
 
 export interface IPost {
   title: string;
   content: string;
   thumbnail: string;
-  category: database.Schema.Types.ObjectId;
-  server: database.Schema.Types.ObjectId;
-  account: database.Schema.Types.ObjectId;
-  likes: database.Schema.Types.ObjectId[];
-  comments: database.Schema.Types.ObjectId[];
+  category: IPostCategory;
+  server: IServer;
+  account: IAccount;
+  likes: IPostLike[];
+  comments: IPost[];
   createdAt: Date;
   updatedAt: Date;
 }

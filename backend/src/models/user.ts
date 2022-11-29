@@ -15,7 +15,7 @@ export type IUser = {
 const userSchema = new database.Schema<IUser>({
   name: { type: String, required: false },
   email: { type: String, unique: true, lowercase: true },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
   role: { type: String, required: true, default: 'user', enum: ['user', 'admin'] },
   servers: [{ type: database.Schema.Types.ObjectId, ref: 'Server' }],
 }, { timestamps: true });

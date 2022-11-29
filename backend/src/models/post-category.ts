@@ -1,9 +1,10 @@
 import database from '../config/database';
+import { IPost } from './post';
 
 export interface IPostCategory {
   name: string;
   description: string;
-  posts: database.Schema.Types.ObjectId[];
+  posts: IPost[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,11 +1,14 @@
 import database from '../config/database';
+import { IAccount } from './account';
+import { IPost } from './post';
+import { IUser } from './user';
 
 export interface IServer {
   name: string;
   description: string;
-  owner: database.Types.ObjectId;
-  accounts: database.Schema.Types.ObjectId[];
-  posts: database.Schema.Types.ObjectId[];
+  owner: IUser;
+  accounts: IAccount[];
+  posts: IPost[];
   createdAt: Date;
   updatedAt: Date;
 }

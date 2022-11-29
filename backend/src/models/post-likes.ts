@@ -1,8 +1,10 @@
 import database from '../config/database';
+import { IAccount } from './account';
+import { IPost } from './post';
 
 export interface IPostLike {
-  account: database.Schema.Types.ObjectId;
-  post: database.Schema.Types.ObjectId;
+  account: IAccount;
+  post: IPost;
   createdAt: Date;
   updatedAt: Date;
 }
