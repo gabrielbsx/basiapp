@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import Controller from '../../domain/controllers/controller';
 
-export default class UpdateServerController {
+export default class UpdateServerController implements Controller {
   async handle(request: Request, response: Response) {
     try {
       const { id } = request.params;

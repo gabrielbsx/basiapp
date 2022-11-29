@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import Account from '../../models/account';
 import * as bcrypt from 'bcrypt';
 import { AuthAccountValidator } from './auth-account-validator';
+import Controller from '../../domain/controllers/controller';
 
-export default class AuthAccountController {
+export default class AuthAccountController implements Controller {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;

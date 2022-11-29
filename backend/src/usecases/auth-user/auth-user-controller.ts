@@ -4,8 +4,9 @@ import User from '../../models/user';
 import env from '../../config/env';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import Controller from '../../domain/controllers/controller';
 
-export default class AuthUserController {
+export default class AuthUserController implements Controller {
   async handle(request: Request, response: Response) {
     try {
       const { body } = request;

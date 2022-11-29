@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import User from '../../models/user';
 import { CreateUserValidator } from './create-user-validator';
 import * as bcrypt from 'bcrypt';
+import Controller from '../../domain/controllers/controller';
 
-export default class CreateUserController {
+export default class CreateUserController implements Controller {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;

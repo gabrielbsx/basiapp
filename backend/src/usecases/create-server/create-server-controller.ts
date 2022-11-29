@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import CreateServerValidator from './create-server-validator';
 import Server from '../../models/server';
 import User from '../../models/user';
+import Controller from '../../domain/controllers/controller';
 
-export default class CreateServerController {
+export default class CreateServerController implements Controller {
   async handle(request: Request, response: Response) {
     try {
       const { body } = request;
