@@ -12,6 +12,10 @@ export class UpdateUserValidator extends Validator {
       .external(UserEmailUnique)
       .messages(UpdateUserValidator.messages.email),
     currentPassword: Joi.string().optional()
+      .when('password', {
+        is: Joi.exist(),
+        then: Joi.required(),
+      })
       .messages(UpdateUserValidator.messages.currentPassword),
     password: Joi.string().optional()
       .min(6).max(24)
