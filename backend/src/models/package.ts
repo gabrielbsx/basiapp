@@ -1,6 +1,8 @@
+import { Schema } from 'mongoose';
 import database from '../config/database';
 
-export interface IPackage {
+export interface Package {
+  id: Schema.Types.ObjectId;
   name: string;
   description: string;
   donate: number;
@@ -17,7 +19,7 @@ export interface IPackage {
   updatedAt: Date;
 }
 
-const packageSchema = new database.Schema<IPackage>({
+const packageSchema = new database.Schema<Package>({
   name: { type: String, required: true },
   description: { type: String, required: true },
   donate: { type: Number, required: true },

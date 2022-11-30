@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import env from '../../config/env';
-import User, { IUser } from '../../models/user';
+import User from '../../models/user';
 
 export default class AuthUserMiddleware {
   async handle(request: Request, response: Response, next: NextFunction) {
@@ -43,13 +43,7 @@ export default class AuthUserMiddleware {
           }],
         });
       }
-      request.user = {
-        id: user._id,
-        ...user.toJSON() as IUser,
-        _id: undefined,
-        __v: undefined,
-      };
-      console.log(request.user);
+      request.user = user.toJSON();
       return next();
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

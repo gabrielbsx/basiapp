@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { UpdateUserValidator } from './update-user-validator';
 import User from '../../models/user';
 import * as bcrypt from 'bcrypt';
-import { dataMongo } from '../../helpers';
+import Controller from '../../domain/controllers/controller';
 
-export default class UpdateUserController {
+export default class UpdateUserController implements Controller {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;
@@ -12,20 +12,37 @@ export default class UpdateUserController {
       if (errors) {
         return response.status(400).json({ errors });
       }
-      const { password } = body;
-      let passwordHashed: string | undefined = undefined;
-      if (password) {
+      const {
+        password,
+        currentPassword,
+        passwordConfirmation,
+        ...userWithoutPasswords
+      } = body;
+      const currentUser = await User.findOne({ _id: request.user.id }).select('+password');
+      if (currentPassword && password && passwordConfirmation) {
+        let passwordHashed: string;
+        const compareCurrentPasswordWithHashedPassword = await bcrypt.compare(currentPassword, currentUser.password);
+        if (!compareCurrentPasswordWithHashedPassword) {
+          return response.status(400).json({
+            errors: [{
+              message: 'Senha atual incorreta',
+              field: 'currentPassword',
+            }],
+          });
+        }
         const salt = await bcrypt.genSalt(10);
         passwordHashed = await bcrypt.hash(password, salt);
+        await User.updateOne({ _id: request.user.id }, {
+          $set: {
+            password: passwordHashed,
+          },
+        });
       }
-      const user = await User.findOneAndUpdate({ _id: request.user?.id }, {
-        ...body,
-        password: passwordHashed,
-      }, { new: true });
+      const user = await User.findOneAndUpdate({ _id: request.user.id }, userWithoutPasswords, { new: true });
       return response.json({
         message: 'Usuário atualizado com sucesso',
         user: {
-          ...dataMongo(user),
+          ...user.toJSON(),
           password: undefined,
         },
       });

@@ -16,6 +16,9 @@ export const userMessages = {
     'string.base': 'O campo senha atual deve ser uma string',
     'string.min': 'O campo senha atual deve ter no mínimo {#limit} caracteres',
     'string.max': 'O campo senha atual deve ter no máximo {#limit} caracteres',
+    'any.required': 'O campo senha atual é obrigatório',
+    'any.only': 'A senha atual está incorreta',
+    'any.ref': 'A senha atual está incorreta',
   },
   password: {
     'string.empty': 'O campo senha não pode ser vazio',

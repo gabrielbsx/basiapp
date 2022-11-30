@@ -13,4 +13,12 @@ export const serverMessages = {
     'string.max': 'O campo descrição deve ter no máximo {#limit} caracteres',
     'any.required': 'O campo descrição é obrigatório',
   },
+  serverId: {
+    'string.empty': 'O campo servidor é obrigatório',
+    'string.base': 'O campo servidor deve ser uma string',
+    'string.min': 'O campo servidor deve ter no mínimo {#limit} caracteres',
+    'string.max': 'O campo servidor deve ter no máximo {#limit} caracteres',
+    'any.required': 'O campo servidor é obrigatório',
+    'serverId.exists': 'O campo servidor não existe',
+  },
 };

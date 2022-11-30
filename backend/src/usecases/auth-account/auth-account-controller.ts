@@ -1,30 +1,50 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Account from '../../models/account';
 import * as bcrypt from 'bcrypt';
 import { AuthAccountValidator } from './auth-account-validator';
+import Controller from '../../domain/controllers/controller';
+import * as jwt from 'jsonwebtoken';
+import env from '../../config/env';
 
-export default class AuthAccountController {
-  async handle (request: Request, response: Response) {
+export default class AuthAccountController implements Controller {
+  async handle(request: Request, response: Response) {
     try {
-      const { body } = request;
-      const errors = await AuthAccountValidator.validate(body, request);
+      const { body, params: { serverId } } = request;
+      const errors = await AuthAccountValidator.validate({ ...body, serverId }, request);
       if (errors) {
         return response.status(400).json({ errors });
       }
-      const { password, ...accountWithoutPassword } = body;
-      const salt = await bcrypt.genSalt(10);
-      const passwordHashed = await bcrypt.hash(password, salt);
-      const user = await Account.create({
-        password: passwordHashed,
-        ...accountWithoutPassword,
+      const { username, password } = body;
+      const account = await Account.findOne({ username, server: serverId }).populate('server').select('+password');
+      if (!account) {
+        return response.status(401).json({
+          errors: [{
+            message: 'Não foi possível autenticar a conta',
+            field: 'username-or-server',
+          }],
+        });
+      }
+      if (!bcrypt.compareSync(password, account.password)) {
+        return response.status(400).json({
+          errors: [{
+            message: 'Não foi possível autenticar a conta',
+            field: 'any',
+          }],
+        });
+      }
+      const token = jwt.sign({ id: account._id! }, env.jwtSecret, {
+        expiresIn: env.jwtExpiration,
       });
       return response.status(201).json({
-        user: {
-          id: user._id,
-          ...accountWithoutPassword,
+        message: 'Conta autenticada com sucesso',
+        token,
+        account: {
+          ...account.toJSON(),
+          password: undefined,
+          server: undefined,
         },
       });
-    } catch (error: any) {
+    } catch (error) {
       return response.status(500).json({ message: error.message });
     }
   }

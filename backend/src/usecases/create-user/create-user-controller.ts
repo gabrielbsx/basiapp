@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import User from '../../models/user';
 import { CreateUserValidator } from './create-user-validator';
 import * as bcrypt from 'bcrypt';
-import { dataMongo } from '../../helpers';
+import Controller from '../../domain/controllers/controller';
 
-export default class CreateUserController {
+export default class CreateUserController implements Controller {
   async handle (request: Request, response: Response) {
     try {
       const { body } = request;
@@ -21,9 +21,9 @@ export default class CreateUserController {
       });
       return response.status(201).json({
         user: {
-          ...dataMongo(user),
+          ...user.toJSON(),
           password: undefined,
-        }
+        },
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });

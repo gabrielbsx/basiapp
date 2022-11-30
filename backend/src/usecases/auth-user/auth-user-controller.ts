@@ -4,9 +4,9 @@ import User from '../../models/user';
 import env from '../../config/env';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { dataMongo } from '../../helpers';
+import Controller from '../../domain/controllers/controller';
 
-export default class AuthUserController {
+export default class AuthUserController implements Controller {
   async handle(request: Request, response: Response) {
     try {
       const { body } = request;
@@ -15,7 +15,7 @@ export default class AuthUserController {
         return response.status(400).json({ errors });
       }
       const { email, password } = body;
-      const user = (await User.findOne({ email }))!;
+      const user = await User.findOne({ email }).select('+password');
       const passwordMatch = await bcrypt.compare(password, user.password!);
       if (!passwordMatch) {
         return response.status(400).json({
@@ -29,11 +29,12 @@ export default class AuthUserController {
         expiresIn: env.jwtExpiration,
       });
       return response.json({
+        message: 'Usuário autenticado com sucesso',
         token,
         user: {
-          ...dataMongo(user),
+          ...user.toJSON(),
           password: undefined,
-        }
+        },
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
