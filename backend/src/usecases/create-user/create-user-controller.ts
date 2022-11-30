@@ -20,7 +20,10 @@ export default class CreateUserController implements Controller {
         ...userWithoutPassword,
       });
       return response.status(201).json({
-        user: user.toJSON(),
+        user: {
+          ...user.toJSON(),
+          password: undefined,
+        },
       });
     } catch (error: any) {
       return response.status(500).json({ message: error.message });
