@@ -18,9 +18,9 @@ export interface Server {
 const serverSchema = new database.Schema<Server>({
   name: { type: String, required: true },
   description: { type: String, required: false },
-  owner: { type: database.Schema.Types.ObjectId, ref: 'User', required: true },
-  accounts: [{ type: database.Schema.Types.ObjectId, ref: 'Account' }],
-  posts: [{ type: database.Schema.Types.ObjectId, ref: 'Post' }],
+  owner: { type: database.Schema.Types.ObjectId, ref: 'User', required: true, select: false },
+  accounts: [{ type: database.Schema.Types.ObjectId, ref: 'Account', select: false }],
+  posts: [{ type: database.Schema.Types.ObjectId, ref: 'Post', select: false }],
 }, { timestamps: true });
 
 export default database.model('Server', serverSchema);

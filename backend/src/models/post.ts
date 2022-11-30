@@ -22,10 +22,10 @@ const postSchema = new database.Schema<Post>({
   content: { type: String, required: true },
   thumbnail: { type: String, required: false },
   category: { type: String, required: true },
-  likes: [{ type: database.Schema.Types.ObjectId, ref: 'Account' }],
-  comments: [{ type: database.Schema.Types.ObjectId, ref: 'Post' }],
-  account: { type: database.Schema.Types.ObjectId, ref: 'Account', required: true },
-  server: { type: database.Schema.Types.ObjectId, ref: 'Server', required: true },
+  likes: [{ type: database.Schema.Types.ObjectId, ref: 'Account', select: false }],
+  comments: [{ type: database.Schema.Types.ObjectId, ref: 'Post', select: false }],
+  account: { type: database.Schema.Types.ObjectId, ref: 'Account', required: true, select: false },
+  server: { type: database.Schema.Types.ObjectId, ref: 'Server', required: true, select: false },
 }, { timestamps: true });
 
 export default database.model('Post', postSchema);
