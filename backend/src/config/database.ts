@@ -1,7 +1,10 @@
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import env from './env';
 
-mongoose.connect(env.mongoUri);
+mongoose.connect(env.mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+} as mongoose.ConnectOptions);
 
 mongoose.plugin((schema: mongoose.Schema) => {
   schema.set('toJSON', {
