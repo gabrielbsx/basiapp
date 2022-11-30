@@ -6,7 +6,7 @@ import { userMessages } from '../../validators/messages';
 export class CreateUserValidator extends Validator {
   static messages = userMessages;
   static validationSchema: Joi.ObjectSchema = Joi.object({
-    name: Joi.string().optional().min(3).max(50)
+    name: Joi.string().optional().min(3).max(100)
       .messages(CreateUserValidator.messages.name),
     email: Joi.string().email().required()
       .external(UserEmailUnique)
