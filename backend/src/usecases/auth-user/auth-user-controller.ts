@@ -29,6 +29,7 @@ export default class AuthUserController implements Controller {
         expiresIn: env.jwtExpiration,
       });
       return response.json({
+        message: 'Usuário autenticado com sucesso',
         token,
         user: {
           ...user.toJSON(),
