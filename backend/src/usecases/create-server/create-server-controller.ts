@@ -12,14 +12,15 @@ export default class CreateServerController implements Controller {
       if (errors) {
         return response.status(400).json({ errors });
       }
-      const user = await User.findOne({ _id: request.user.id });
+      const user = await User.findOne({ _id: request.user.id }).populate('servers');
       const server = await Server.create({
         ...body,
-        owner: user,
+        owner: user._id,
       });
       user.servers.push(server);
       await user.save();
       return response.json({
+        message: 'Servidor criado com sucesso',
         server: server.toJSON(),
       });
     } catch (error: any) {
