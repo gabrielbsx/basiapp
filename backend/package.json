@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.ts",
+  "main": "src/main/server.ts",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/main/server.ts"
   },
   "author": "gabrielbsx",
   "license": "ISC",

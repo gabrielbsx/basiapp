@@ -1,7 +1,7 @@
 import * as Express from 'express';
 import { FlattenMaps, Types } from 'mongoose';
-import { Account } from '../../models/account';
-import { User } from '../../models/user';
+import { Account } from '../../infra/models/account';
+import { User } from '../../infra/models/user';
 
 declare global {
   namespace Express {
